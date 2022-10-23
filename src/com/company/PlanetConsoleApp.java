@@ -160,8 +160,8 @@ public class PlanetConsoleApp {
                     case 4:
                         planet.setSatellitesCount(UI.enterInt("Write the new count of satellites of planet: "));
                     case 5:
-                        UI.printMessage("Available colours:" + Arrays.deepToString(PlanetColour.values()));
-                        //planet.setColour(UI.enterString("Write the colour: ")); //todo
+                        UI.printMessage("Available colours:" + Arrays.toString(PlanetColour.values()));
+                        planet.setColour(UI.enterString("Write the colour: "));
                         break;
                     case 6: return;
                 }

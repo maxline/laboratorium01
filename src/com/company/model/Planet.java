@@ -1,7 +1,7 @@
 package com.company.model;
 
 import java.io.*;
-import java.util.List;
+import java.util.Locale;
 
 public class Planet {
     public String name;
@@ -9,6 +9,10 @@ public class Planet {
     private int mass;
     private float radius;
     private int satellitesCount;
+
+    public Planet(String name) {
+        this.name = name;
+    }
 
     public Planet(String name, int mass, float radius, int satellitesCount) throws PlanetException {
         setName(name);
@@ -18,17 +22,17 @@ public class Planet {
         setSatellitesCount(satellitesCount);
     }
 
-    public static Planet readFromFile (BufferedReader reader) throws PlanetException {
+    public static Planet readFromFile(BufferedReader reader) throws PlanetException {
         try {
             String line = reader.readLine();
             String[] txt = line.split("#");
             Planet planet = new Planet(txt[0]);
-            planet.setMass(txt[1]);
-            planet.setRadius(txt[2]);
-            planet.setSatellitesCount(txt[3]);
-            planet.setColour(txt[4]);
+            planet.setMass(Integer.parseInt(txt[1]));
+            planet.setRadius(Float.parseFloat(txt[2]));
+            planet.setSatellitesCount(Integer.parseInt(txt[3]));
+            planet.setColour(PlanetColour.valueOf(txt[4].toUpperCase(Locale.ROOT)));
             return planet;
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new PlanetException("Reading wasn't succesful");
         }
     }
@@ -36,15 +40,15 @@ public class Planet {
     public static Planet readFromFile(String file_name) throws PlanetException {
         try (BufferedReader reader = new BufferedReader(new FileReader(new File(file_name)))) {
             return Planet.readFromFile(reader);
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             throw new PlanetException("Document wasn't found" + file_name);
-        } catch(IOException e){
+        } catch (IOException e) {
             throw new PlanetException("Reading wasn't succesful");
         }
     }
 
 
-    public static void printToFile(PrintWriter writer, Planet planet){
+    public static void printToFile(PrintWriter writer, Planet planet) {
         writer.println(planet.name + "#" + planet.mass +
                 "#" + planet.radius + "#" + planet.satellitesCount + "#" + planet.colour);
     }
@@ -53,7 +57,7 @@ public class Planet {
     public static void writeToTheDocument(String file_name, Planet planet) throws PlanetException {
         try (PrintWriter writer = new PrintWriter(file_name)) {
             printToFile(writer, planet);
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             throw new PlanetException("Document wasn't found " + file_name);
         }
     }
@@ -79,6 +83,19 @@ public class Planet {
         this.colour = colour;
     }
 
+    public void setColour(String inputColor) throws PlanetException {
+        if (inputColor == null || inputColor.isBlank()) {
+            this.colour = PlanetColour.UNKNOWN;
+            return;
+        }
+        for(PlanetColour colour : PlanetColour.values()){
+            if (colour.getPlanetColour().equals(inputColor)) {
+                this.colour = colour;
+                return;
+            }
+        }
+        throw new PlanetException("No such colour.");
+    }
 
     public int getMass() {
         return mass;

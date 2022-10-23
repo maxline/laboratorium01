@@ -2,16 +2,20 @@ package com.company.model;
 
 public enum PlanetColour {
     UNKNOWN("-------"),
-    BLUE("blue" || "Blue"),
-    VIOLET ("violet" || "Violet"),
-    RED ("red" || "Red"),
-    YELLOW ("yellow" || "Yellow"),
-    ORANGE  ("orange" || "Orange"),
+    BLUE("Blue"),
+    VIOLET ("Violet"),
+    RED ("Red"),
+    YELLOW ("Yellow"),
+    ORANGE  ("Orange");
 
-    String planet_Colour;
+    private String planetColour;
 
-    private PlanetColour(String planet_colour) {
-        planetColour = planet_colour;
+    PlanetColour(String planetColour) {
+        this.planetColour = planetColour;
+    }
+
+    public String getPlanetColour() {
+        return planetColour;
     }
 
     @Override
