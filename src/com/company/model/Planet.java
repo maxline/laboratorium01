@@ -33,17 +33,17 @@ public class Planet {
             planet.setColour(PlanetColour.valueOf(txt[4].toUpperCase(Locale.ROOT)));
             return planet;
         } catch (IOException e) {
-            throw new PlanetException("Reading wasn't succesful");
+            throw new PlanetException("Reading wasn't successful");
         }
     }
 
-    public static Planet readFromFile(String file_name) throws PlanetException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File(file_name)))) {
+    public static Planet readFromFile(String fileName) throws PlanetException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             return Planet.readFromFile(reader);
         } catch (FileNotFoundException e) {
-            throw new PlanetException("Document wasn't found" + file_name);
+            throw new PlanetException("Document wasn't found" + fileName);
         } catch (IOException e) {
-            throw new PlanetException("Reading wasn't succesful");
+            throw new PlanetException("Reading wasn't successful");
         }
     }
 
@@ -52,7 +52,6 @@ public class Planet {
         writer.println(planet.name + "#" + planet.mass +
                 "#" + planet.radius + "#" + planet.satellitesCount + "#" + planet.colour);
     }
-
 
     public static void writeToTheDocument(String file_name, Planet planet) throws PlanetException {
         try (PrintWriter writer = new PrintWriter(file_name)) {
@@ -89,7 +88,7 @@ public class Planet {
             return;
         }
         for(PlanetColour colour : PlanetColour.values()){
-            if (colour.getPlanetColour().equals(inputColor)) {
+            if (colour.getPlanetColour().equalsIgnoreCase(inputColor)) {
                 this.colour = colour;
                 return;
             }
@@ -130,7 +129,6 @@ public class Planet {
         this.satellitesCount = satellitesCount;
     }
 
-
     @Override
     public String toString() {
         return "Planet{" +
@@ -141,6 +139,4 @@ public class Planet {
                 ", satellitesCount=" + satellitesCount +
                 '}';
     }
-
-
 }

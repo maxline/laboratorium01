@@ -24,14 +24,14 @@ public class PlanetConsoleApp {
             5) Write data to the document
             6) End program""";
 
-    public static final String CHANGEMENU = """
-                1) Choose name\s
-                2) Choose mass
-                3) Choose radius
-                4) Choose the count of satellites
-                5) Choose the colour of planet
-                6) None
-                """;
+    public static final String CHANGE_MENU = """
+            1) Choose name\s
+            2) Choose mass
+            3) Choose radius
+            4) Choose the count of satellites
+            5) Choose the colour of planet
+            6) None
+            """;
 
     private static List<Planet> planets;
 
@@ -54,7 +54,7 @@ public class PlanetConsoleApp {
             try {
                 UI.printMessage(MENU);
 
-                switch (UI.enterInt(" What do you choose? -> ")) {
+                switch (UI.enterInt("What do you choose? -> ")) {
                     case 1:
                         currentPlanet = createNewPlanet();
                         break;
@@ -83,11 +83,8 @@ public class PlanetConsoleApp {
             } catch (PlanetException e) {
                 UI.printErrorMessage(e.getMessage());
             }
-
         }
-
     }
-
 
     private void showCurrentPlanet() {
         showPlanet(currentPlanet);
@@ -119,8 +116,8 @@ public class PlanetConsoleApp {
 
     public static Planet createNewPlanet() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the planet name");
-        String name = scanner.nextLine();
+        System.out.println("Enter the planet name"); //todo fix with using methods from ConsoleUserDialog
+        String name = scanner.nextLine(); //todo fix with using methods from ConsoleUserDialog
         System.out.println("Enter the planet mass");
         int mass = scanner.nextInt();
         System.out.println("Enter the planet radius");
@@ -128,26 +125,24 @@ public class PlanetConsoleApp {
         System.out.println("Enter the count of satellites");
         int satellites = scanner.nextInt();
         UI.printMessage("Available colours:" + Arrays.deepToString(PlanetColour.values()));
-        String planet_colour = UI.enterString("Write the colour: ");
+        String planetColour = UI.enterString("Write the colour: ");
         Planet planet = null;
         try {
             planet = new Planet(name, mass, radius, satellites);
-            planet.setColour(PlanetColour.valueOf(planet_colour));
-
+            planet.setColour(planetColour);
         } catch (PlanetException e) {
             UI.printErrorMessage(e.getMessage());
         }
         return planet;
     }
 
-    static void changePlanetData(Planet planet)
-    {
+    static void changePlanetData(Planet planet) {
         while (true) {
             UI.clearConsole();
             showPlanet(planet);
 
             try {
-                switch (UI.enterInt(CHANGEMENU + "==>> ")) {
+                switch (UI.enterInt(CHANGE_MENU + "==>> ")) {
                     case 1:
                         planet.setName(UI.enterString("Write the new name of planet: "));
                         break;
@@ -163,7 +158,8 @@ public class PlanetConsoleApp {
                         UI.printMessage("Available colours:" + Arrays.toString(PlanetColour.values()));
                         planet.setColour(UI.enterString("Write the colour: "));
                         break;
-                    case 6: return;
+                    case 6:
+                        return;
                 }
             } catch (PlanetException e) {
                 UI.printErrorMessage(e.getMessage());

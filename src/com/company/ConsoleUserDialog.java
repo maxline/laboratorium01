@@ -3,22 +3,18 @@ package com.company;
 import java.util.Scanner;
 
 public class ConsoleUserDialog {
-    private final String  ERROR_MESSAGE =
-            "Not correct information. Try again";
+    private final String  ERROR_MESSAGE = "Not correct information. Try again";
 
     private Scanner sc = new Scanner(System.in);
-
 
     public void printMessage(String message) {
         System.out.println(message);
     }
 
-
-    public void printInfoMessage(String message) { //todo check
+    public void printInfoMessage(String message) {
         System.out.println(message);
         enterString("Nacisnij ENTER");
     }
-
 
     public void printErrorMessage(String message) {
         System.err.println(message);
@@ -26,17 +22,14 @@ public class ConsoleUserDialog {
         enterString("");
     }
 
-
     public void clearConsole(){
         System.out.println("\n\n");
     }
-
 
     public String enterString(String prompt) {
         System.out.print(prompt);
         return sc.nextLine();
     }
-
 
 //    public char enterChar(String prompt) { //todo check
 //        boolean isError;
@@ -53,7 +46,6 @@ public class ConsoleUserDialog {
 //        return c;
 //    }
 
-
     public int enterInt(String prompt) {
         boolean isError;
         int i = 0;
@@ -68,7 +60,6 @@ public class ConsoleUserDialog {
         }while(isError);
         return i;
     }
-
 
     public float enterFloat(String prompt) {
         boolean isError;
@@ -85,7 +76,4 @@ public class ConsoleUserDialog {
         return d;
     }
 
-
-
 }
-
